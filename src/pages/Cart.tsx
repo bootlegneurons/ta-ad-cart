@@ -1,6 +1,7 @@
 import { Box, Button, Checkbox, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import React from 'react';
 import useCart from '../features/cart/useCart';
+import { formatAud } from '../features/cart/util';
 
 const Cart = (): JSX.Element => {
   const cartId = '1';
@@ -19,12 +20,12 @@ const Cart = (): JSX.Element => {
                 {product.quantity}x {product.name}
               </Heading>
               <Text>{product.description}</Text>
-              <Text>Price: ${product.price}</Text>
+              <Text>Price: {formatAud(product.price)}</Text>
             </div>
           );
         })}
         <Divider />
-        <Text>Subtotal: {subtotal}</Text>
+        <Text>Subtotal: {formatAud(subtotal)}</Text>
         {offers.length > 0 && (
           <>
             <Heading as='h3' size='sm'>
@@ -32,21 +33,21 @@ const Cart = (): JSX.Element => {
             </Heading>
             {offers.map(offer => (
               <Text key={offer.description}>
-                {offer.description} (-${offer.discountAmount})
+                {offer.description} (-{formatAud(offer.discountAmount)})
               </Text>
             ))}
           </>
         )}
-        <Text>Discount: -${discount}</Text>
+        <Text>Discount: -{formatAud(discount)}</Text>
         <Heading as='h3' size='sm'>
-          Total: ${total}
+          Total: {formatAud(total)}
         </Heading>
         <Divider />
         <Box>
           <Checkbox>I agree to the SEEK Advertising Terms & Conditions</Checkbox> (
           <Link>click to read</Link>)
         </Box>
-        <Button disabled>Proceed to payment</Button>
+        <Button disabled>Make {formatAud(total)} payment</Button>
       </Flex>
     </Flex>
   );
