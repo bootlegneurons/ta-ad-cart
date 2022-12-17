@@ -24,6 +24,7 @@ export enum OfferCode {
 }
 
 export interface Offer {
+  description: string;
   eligibleProduct: ProductCode;
   threshold: Quantity;
   discountAmount: number;
