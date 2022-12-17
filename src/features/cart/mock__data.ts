@@ -13,7 +13,8 @@ export const products: Products = {
   },
   [ProductCode.PREMIUM]: {
     name: 'Premium Ad',
-    description: 'Same benefits as StandOut, but also puts the advertisement at the top of the results',
+    description:
+      'Same benefits as StandOut, but also puts the advertisement at the top of the results',
     price: 394.99,
   },
 };
@@ -27,7 +28,7 @@ export const offers: Offers = {
   [OfferCode.AXIL_STANDOUT]: {
     eligibleProduct: ProductCode.STANDOUT,
     threshold: 1,
-    discountAmount: (products[ProductCode.STANDOUT].price - 299.99),
+    discountAmount: products[ProductCode.STANDOUT].price - 299.99,
   },
   [OfferCode.MYER_5FOR4STANDOUT]: {
     eligibleProduct: ProductCode.STANDOUT,
@@ -37,14 +38,18 @@ export const offers: Offers = {
   [OfferCode.MYER_PREMIUM]: {
     eligibleProduct: ProductCode.PREMIUM,
     threshold: 1,
-    discountAmount: (products[ProductCode.STANDOUT].price - 389.99),
+    discountAmount: products[ProductCode.STANDOUT].price - 389.99,
   },
 };
 
 export const carts: Carts = {
   1: {
-    customer: "Guest",
-    items: [ProductCode.CLASSIC, ProductCode.STANDOUT, ProductCode.PREMIUM],
+    customer: 'Guest',
+    items: [
+      { [ProductCode.CLASSIC]: 1 },
+      { [ProductCode.STANDOUT]: 1 },
+      { [ProductCode.PREMIUM]: 1 },
+    ],
     offers: [],
   },
 };

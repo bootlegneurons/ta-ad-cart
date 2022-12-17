@@ -1,10 +1,14 @@
+type Quantity = 1 | 2 | 3 | 4 | 5;
+
 export enum ProductCode {
   CLASSIC = 'CLASSIC',
   STANDOUT = 'STANDOUT',
   PREMIUM = 'PREMIUM',
 }
 
-interface Product {
+export type LineItem = { [k in ProductCode]?: Product & { quantity: Quantity } };
+
+export interface Product {
   name: string;
   description: string;
   price: number;
@@ -19,16 +23,25 @@ export enum OfferCode {
   MYER_PREMIUM = 'MYER_PREMIUM',
 }
 
-interface Offer {
+export interface Offer {
   eligibleProduct: ProductCode;
-  threshold: 1 | 2 | 3 | 4 | 5;
+  threshold: Quantity;
   discountAmount: number;
 }
 export type Offers = Record<OfferCode, Offer>;
 
-interface Cart {
+export interface Cart {
   customer: string;
-  items: ProductCode[];
-  offers: Offer[];
+  items: { [k in ProductCode]?: Quantity }[];
+  offers: OfferCode[];
 };
-export type Carts = Record<number, Cart>;
+export type Carts = Record<string, Cart>;
+
+export interface CartQueryResponse {
+  customer: string;
+  items: LineItem[];
+  offers: Offer[];
+  subtotal: number;
+  discount: number;
+  total: number;
+}
