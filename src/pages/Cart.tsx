@@ -1,35 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
   Checkbox,
   Divider,
-  Flex,
   Heading,
   Link,
-  Select,
   Text,
 } from '@chakra-ui/react';
-import { useCart, formatAud } from '../features/cart';
-import { carts } from '../features/cart/mock__data';
+import { formatAud, CartQueryResponse } from '../features/cart';
 
-const Cart = (): JSX.Element => {
-  const [selectedCart, setSelectedCart] = useState('1');
-  const { customer, items, discounts, subtotal, totalDiscount, total } = useCart(selectedCart);
-  const allCarts = Object.keys(carts);
+interface CartProps {
+  cart: CartQueryResponse;
+  selectedCartId: string;
+}
+
+// TODO: refactor to extract child components
+const Cart = ({ cart, selectedCartId }: CartProps): JSX.Element => {
+  const { customer, items, discounts, subtotal, totalDiscount, total } = cart;
 
   return (
-    <Flex maxW='100vw' h='100%' justify='center' align='center' my='32px'>
-      <Flex direction='column' maxW={768} border='1px' gap='16px' padding='16px'>
-        {process.env.NODE_ENV !== 'production' && (
-          <Select onChange={e => setSelectedCart(e.target.value)} mb='32px'>
-            {allCarts.map(cartId => (
-              <option key={cartId} value={`${cartId}`}>{cartId}</option>
-            ))}
-          </Select>
-        )}
+      <> 
         <Heading as='h1'>Checkout for {customer}</Heading>
-        <Heading size='md'>Your cart (id: {selectedCart})</Heading>
+        <Heading size='md'>Your cart (id: {selectedCartId})</Heading>
         {items.map(item => {
           const product = Object.values(item)[0];
           return (
@@ -46,7 +39,7 @@ const Cart = (): JSX.Element => {
         <Text>Subtotal: {formatAud(subtotal)}</Text>
         {discounts.length > 0 && totalDiscount > 0 && (
           <>
-            <Heading as='h3' size='sm'>
+            <Heading as='h3' size='sm' data-testid='discount-section'>
               Discounts applied
             </Heading>
             {discounts.map(discount => (
@@ -69,8 +62,7 @@ const Cart = (): JSX.Element => {
           <Link>click to read</Link>)
         </Box>
         <Button disabled>Make {formatAud(total)} payment</Button>
-      </Flex>
-    </Flex>
+      </>
   );
 };
 

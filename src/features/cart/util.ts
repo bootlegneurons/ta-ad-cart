@@ -7,7 +7,7 @@ export const roundToTwo = (num: number): number => Math.round(num * 100) / 100;
 
 export const getSum = (nums: number[]): number => nums.reduce((subtotal, p) => subtotal + p, 0);
 
-const countEligibleItems = (productCode: ProductCode, items: LineItem[]): number => {
+export const countEligibleItems = (productCode: ProductCode, items: LineItem[]): number => {
   const match = items.find((item) => Object.keys(item)[0] === productCode);
   if (match) {
     return Object.values(match)[0].quantity;
