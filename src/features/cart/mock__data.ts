@@ -69,4 +69,21 @@ export const carts: Carts = {
     ],
     offers: [OfferCode.SECONDBITE_3FOR2CLASSIC],
   },
+  3: {
+    customer: 'Axil Coffee Roasters',
+    items: [
+      { [ProductCode.STANDOUT]: 3 },
+      { [ProductCode.PREMIUM]: 1 },
+    ],
+    offers: [OfferCode.AXIL_STANDOUT],
+  },
+  4: {
+    customer: 'MYER',
+    items: [
+      { [ProductCode.CLASSIC]: 1 },
+      { [ProductCode.STANDOUT]: 5 },
+      { [ProductCode.PREMIUM]: 9 },
+    ],
+    offers: [OfferCode.MYER_5FOR4STANDOUT, OfferCode.MYER_PREMIUM],
+  },
 };

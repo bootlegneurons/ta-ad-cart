@@ -19,12 +19,12 @@ const Cart = (): JSX.Element => {
   const allCarts = Object.keys(carts);
 
   return (
-    <Flex w='100vw' h='100vh' justify='center' align='center'>
+    <Flex maxW='100vw' h='100%' justify='center' align='center' my='32px'>
       <Flex direction='column' maxW={768} border='1px' gap='16px' padding='16px'>
         {process.env.NODE_ENV !== 'production' && (
           <Select onChange={e => setSelectedCart(e.target.value)} mb='32px'>
             {allCarts.map(cartId => (
-              <option value={`${cartId}`}>{cartId}</option>
+              <option key={cartId} value={`${cartId}`}>{cartId}</option>
             ))}
           </Select>
         )}

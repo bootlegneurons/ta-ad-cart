@@ -8,8 +8,6 @@ export const roundToTwo = (num: number): number => Math.round(num * 100) / 100;
 export const getSum = (nums: number[]): number => nums.reduce((subtotal, p) => subtotal + p, 0);
 
 const countEligibleItems = (productCode: ProductCode, items: LineItem[]): number => {
-  // find line item match, return 0 if not found
-  // return quantity otherwise
   const match = items.find((item) => Object.keys(item)[0] === productCode);
   if (match) {
     return Object.values(match)[0].quantity;
@@ -22,7 +20,7 @@ export const getDiscounts = (offers: Offer[], items: LineItem[]): Discount[] => 
     // if conditions are met, push a Discount to the accumulator.
     const numEligibleProducts = countEligibleItems(eligibleProduct, items);
     const timesApplied = Math.floor(numEligibleProducts / threshold);
-    console.log('%% getDiscounts:', numEligibleProducts, timesApplied);
+
     if (numEligibleProducts > 0 && timesApplied > 0) {
       acc.push({
         id,
