@@ -1,4 +1,4 @@
-type Quantity = 1 | 2 | 3 | 4 | 5;
+type Quantity = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export enum ProductCode {
   CLASSIC = 'CLASSIC',
@@ -24,6 +24,7 @@ export enum OfferCode {
 }
 
 export interface Offer {
+  id: OfferCode;
   description: string;
   eligibleProduct: ProductCode;
   threshold: Quantity;
@@ -41,8 +42,15 @@ export type Carts = Record<string, Cart>;
 export interface CartQueryResponse {
   customer: string;
   items: LineItem[];
-  offers: Offer[];
+  discounts: Discount[];
   subtotal: number;
-  discount: number;
+  totalDiscount: number;
   total: number;
+}
+
+export interface Discount {
+  id: string;
+  description: string;
+  timesApplied: number;
+  amount: number;
 }

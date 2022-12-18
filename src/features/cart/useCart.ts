@@ -5,14 +5,14 @@ import { CartQueryResponse } from './types';
 const DEFAULT_STATE: CartQueryResponse = {
   customer: '',
   items: [],
-  offers: [],
+  discounts: [],
   subtotal: 0,
-  discount: 0,
+  totalDiscount: 0,
   total: 0,
 };
 
 const useCart = (cartId: string): CartQueryResponse => {
-  const { data, error } = useSWR(['cart', cartId], () => mock__fetcher(cartId));
+  const { data, error } = useSWR(['cart', cartId], ([, cartId]) => mock__fetcher(cartId));
 
   if (error || !data) {
     // return fallback data in case there's no data for provided cartId, or while loading

@@ -1,11 +1,10 @@
-import { Box, Button, Checkbox, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import React from 'react';
-import useCart from '../features/cart/useCart';
-import { formatAud } from '../features/cart/util';
+import { Box, Button, Checkbox, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import { useCart, formatAud } from '../features/cart';
 
 const Cart = (): JSX.Element => {
-  const cartId = '1';
-  const { customer, items, offers, subtotal, discount, total } = useCart(cartId);
+  const cartId = '2';
+  const { customer, items, discounts, subtotal, totalDiscount, total } = useCart(cartId);
 
   return (
     <Flex w='100vw' h='100vh' justify='center' align='center'>
@@ -20,25 +19,28 @@ const Cart = (): JSX.Element => {
                 {product.quantity}x {product.name}
               </Heading>
               <Text>{product.description}</Text>
-              <Text>Price: {formatAud(product.price)}</Text>
+              <Text>Price: {formatAud(product.price * product.quantity)}</Text>
             </div>
           );
         })}
         <Divider />
         <Text>Subtotal: {formatAud(subtotal)}</Text>
-        {offers.length > 0 && (
+        {discounts.length > 0 && totalDiscount > 0 && (
           <>
             <Heading as='h3' size='sm'>
-              Offers applied
+              Discounts applied
             </Heading>
-            {offers.map(offer => (
-              <Text key={offer.description}>
-                {offer.description} (-{formatAud(offer.discountAmount)})
-              </Text>
+            {discounts.map(discount => (
+              <div key={discount.id}>
+                <Heading as='h3' size='sm'>
+                  {discount.timesApplied}x {discount.id} (-{formatAud(discount.amount)})
+                </Heading>
+                <Text>{discount.description}</Text>
+              </div>
             ))}
+            <Text>Total Discount: -{formatAud(totalDiscount)}</Text>
           </>
         )}
-        <Text>Discount: -{formatAud(discount)}</Text>
         <Heading as='h3' size='sm'>
           Total: {formatAud(total)}
         </Heading>
