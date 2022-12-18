@@ -1,16 +1,35 @@
-import React from 'react';
-import { Box, Button, Checkbox, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  Flex,
+  Heading,
+  Link,
+  Select,
+  Text,
+} from '@chakra-ui/react';
 import { useCart, formatAud } from '../features/cart';
+import { carts } from '../features/cart/mock__data';
 
 const Cart = (): JSX.Element => {
-  const cartId = '2';
-  const { customer, items, discounts, subtotal, totalDiscount, total } = useCart(cartId);
+  const [selectedCart, setSelectedCart] = useState('1');
+  const { customer, items, discounts, subtotal, totalDiscount, total } = useCart(selectedCart);
+  const allCarts = Object.keys(carts);
 
   return (
     <Flex w='100vw' h='100vh' justify='center' align='center'>
       <Flex direction='column' maxW={768} border='1px' gap='16px' padding='16px'>
+        {process.env.NODE_ENV !== 'production' && (
+          <Select onChange={e => setSelectedCart(e.target.value)} mb='32px'>
+            {allCarts.map(cartId => (
+              <option value={`${cartId}`}>{cartId}</option>
+            ))}
+          </Select>
+        )}
         <Heading as='h1'>Checkout for {customer}</Heading>
-        <Heading size='md'>Your cart (id: {cartId})</Heading>
+        <Heading size='md'>Your cart (id: {selectedCart})</Heading>
         {items.map(item => {
           const product = Object.values(item)[0];
           return (
